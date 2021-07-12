@@ -15,11 +15,11 @@ type Store interface {
 // The `dbStore` struct will implement the `Store` interface
 // It also takes the sql DB connection object, which represents
 // the database connection.
-type dbStore struct {
-	db *sql.DB
+type DbStore struct {
+	Db *sql.DB
 }
 
-func (store *dbStore) getExercises() ([]*model.Comment, error) {
+func (store *DbStore) getExercises() ([]*model.Comment, error) {
 	// Query the database for all birds, and return the result to the
 	// `rows` object
 	rows, err := store.db.Query("SELECT * from comment")
