@@ -1,4 +1,4 @@
-package github.com/Vukeezy/ntp2021/tree/main/server/repository
+package repository
 
 // The sql go library is needed to interact with the database
 import (
