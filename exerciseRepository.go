@@ -1,5 +1,6 @@
 package repository
 
+//tvoja mama je ruzna
 // The sql go library is needed to interact with the database
 import (
 	"database/sql"
