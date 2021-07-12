@@ -1,3 +1,3 @@
-module github.com/Vukeezy/ntp2021/tree/main/server/repository
+module github.com/Vukeezy/ntp2021
 
 go 1.16
