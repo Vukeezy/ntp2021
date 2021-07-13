@@ -25,9 +25,9 @@ type DbStore struct {
 func (store *DbStore) GetExercises() ([]*model.Exercise, error) {
 	// Query the database for all birds, and return the result to the
 	// `rows` object
-	rows, err := store.Db.Query("SELECT * from exercise")
+	query := `SELECT * FROM "exercise"`
+	rows, err := store.Db.Query(query)
 	// We return incase of an error, and defer the closing of the row structure
-	print(err)
 	if err != nil {
 		return nil, err
 	}
@@ -41,8 +41,7 @@ func (store *DbStore) GetExercises() ([]*model.Exercise, error) {
 		exercise := &model.Exercise{}
 		// Populate the `Species` and `Description` attributes of the bird,
 		// and return incase of an error
-		print(rows)
-		if err := rows.Scan(&exercise.Id, &exercise.Name, &exercise.Equipment); err != nil {
+		if err := rows.Scan(&exercise.Id, &exercise.RequestedPreparedness, &exercise.Equipment, &exercise.Name, &exercise.Description, &exercise.Type); err != nil {
 			return nil, err
 		}
 		// Finally, append the result to the returned array, and repeat for

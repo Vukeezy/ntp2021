@@ -14,10 +14,10 @@ func GetCommentHandler(w http.ResponseWriter, r *http.Request) {
 		The list of birds is now taken from the store instead of the package level variable we had earlier
 	*/
 
-	comment,err := repository.GetStore().GetExercises()
-
+	exercises,err := repository.GetStore().GetExercises()
+	fmt.Printf("exercises %s", err)
 	// Everything else is the same as before
-	birdListBytes, err := json.Marshal(comment)
+	birdListBytes, err := json.Marshal(exercises)
 
 	if err != nil {
 		fmt.Println(fmt.Errorf("Error: %v", err))
@@ -25,4 +25,5 @@ func GetCommentHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write(birdListBytes)
+
 }

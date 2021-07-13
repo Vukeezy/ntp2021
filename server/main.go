@@ -26,7 +26,7 @@ func newRouter() *mux.Router {
 
 func main() {
 	fmt.Println("Starting server...")
-	connString := "dbname=postgres user=postgres password=vukasin123 sslmode=disable"
+	connString := "dbname=vezbe_db user=postgres password=vukasin123 sslmode=disable"
 	db, err := sql.Open("postgres", connString)
 
 	if err != nil {
