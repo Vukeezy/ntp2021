@@ -10,7 +10,7 @@ import (
 
 type Store interface {
 
-	GetExercises() ([]*model.Comment, error)
+	GetExercises() ([]*model.Exercise, error)
 
 	//GetBirds() ([]*Bird, error)
 }
