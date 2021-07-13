@@ -1,0 +1,12 @@
+github.com/Vukeezy/ntp2021 v0.0.0-20210712230026-92474f7bf2e9 h1:9i1ASnjWDN7Ibktl5YogzvQLbcK2X5LanVFnFxCoYWc=
+github.com/Vukeezy/ntp2021 v0.0.0-20210712230026-92474f7bf2e9/go.mod h1:pqgjjKG3un3mOR3ommn57ZFH/Ejnp14LSLa8M2u4Ni0=
+github.com/Vukeezy/ntp2021 v0.0.0-20210712231452-6696b760e8c0 h1:H/Ijz4jX48uHcfweaLO7UfKwu1mqBXH2+UM6nm3e7QQ=
+github.com/Vukeezy/ntp2021 v0.0.0-20210712231452-6696b760e8c0/go.mod h1:pqgjjKG3un3mOR3ommn57ZFH/Ejnp14LSLa8M2u4Ni0=
+github.com/Vukeezy/ntp2021 v0.0.0-20210712234051-028b80caba6f h1:wb+NmdAR292/mdkwSj1MWgUbOmoMqqIQgav51n7eteg=
+github.com/Vukeezy/ntp2021 v0.0.0-20210712234051-028b80caba6f/go.mod h1:mIM8XHjLUI/wzQ9SwksCbvMnGzn2F+VzrtkKw0Xjobo=
+github.com/Vukeezy/ntp2021 v0.0.0-20210712234920-354213ce12bf h1:YUEv39OfKpgOiWbDRS3qD3UVooAMsUJsf13jaE/Or58=
+github.com/Vukeezy/ntp2021 v0.0.0-20210712234920-354213ce12bf/go.mod h1:mIM8XHjLUI/wzQ9SwksCbvMnGzn2F+VzrtkKw0Xjobo=
+github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
+github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
+github.com/lib/pq v1.10.2 h1:AqzbZs4ZoCBp+GtejcpCpcxM3zlSMx29dXbUSeVtJb8=
+github.com/lib/pq v1.10.2/go.mod h1:AlVN5x4E4T544tWzH6hKfbfQvm3HdbOxrmggDNAPY9o=

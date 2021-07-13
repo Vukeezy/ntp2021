@@ -1,4 +1,4 @@
-package repository
+/*package router
 
 //nesto
 // The sql go library is needed to interact with the database
@@ -22,7 +22,7 @@ type DbStore struct {
 func (store *DbStore) getExercises() ([]*model.Comment, error) {
 	// Query the database for all birds, and return the result to the
 	// `rows` object
-	rows, err := store.Db.Query("SELECT * from comment")
+	rows, err := store.db.Query("SELECT * from comment")
 	// We return incase of an error, and defer the closing of the row structure
 	if err != nil {
 		return nil, err
@@ -56,7 +56,7 @@ We will need to call the InitStore method to initialize the store. This will
 typically be done at the beginning of our application (in this case, when the server starts up)
 This can also be used to set up the store as a mock, which we will be observing
 later on
-*/
+
 func InitStore(s Store) {
 	store = s
-}
+}*/
