@@ -27,7 +27,7 @@ func (store *DbStore) GetExercises() ([]*model.Exercise, error) {
 	// `rows` object
 	rows, err := store.Db.Query("SELECT * from exercise")
 	// We return incase of an error, and defer the closing of the row structure
-	print(rows.Next())
+	print(err)
 	if err != nil {
 		return nil, err
 	}
