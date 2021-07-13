@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	handler "github.com/Vukeezy/main/api"
-	"github.com/Vukeezy/ntp2021/server/repository"
+	repository "github.com/Vukeezy/main/repository"
 
 	_ "github.com/lib/pq"
 	"net/http"
@@ -26,7 +26,7 @@ func newRouter() *mux.Router {
 
 func main() {
 	fmt.Println("Starting server...")
-	connString := "dbname=ntp_baza sslmode=disable"
+	connString := "dbname=postgres user=postgres password=vukasin123 sslmode=disable"
 	db, err := sql.Open("postgres", connString)
 
 	if err != nil {

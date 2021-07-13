@@ -6,6 +6,8 @@ github.com/Vukeezy/ntp2021 v0.0.0-20210712234051-028b80caba6f h1:wb+NmdAR292/mdk
 github.com/Vukeezy/ntp2021 v0.0.0-20210712234051-028b80caba6f/go.mod h1:mIM8XHjLUI/wzQ9SwksCbvMnGzn2F+VzrtkKw0Xjobo=
 github.com/Vukeezy/ntp2021 v0.0.0-20210712234920-354213ce12bf h1:YUEv39OfKpgOiWbDRS3qD3UVooAMsUJsf13jaE/Or58=
 github.com/Vukeezy/ntp2021 v0.0.0-20210712234920-354213ce12bf/go.mod h1:mIM8XHjLUI/wzQ9SwksCbvMnGzn2F+VzrtkKw0Xjobo=
+github.com/Vukeezy/ntp2021 v0.0.0-20210713005322-c585fcb94d54 h1:IVBuxqUtdbbtMYODjQ1kriTx93lJ+2fpkojX22msRGQ=
+github.com/Vukeezy/ntp2021 v0.0.0-20210713005322-c585fcb94d54/go.mod h1:mIM8XHjLUI/wzQ9SwksCbvMnGzn2F+VzrtkKw0Xjobo=
 github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
 github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
 github.com/lib/pq v1.10.2 h1:AqzbZs4ZoCBp+GtejcpCpcxM3zlSMx29dXbUSeVtJb8=

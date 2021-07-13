@@ -22,11 +22,12 @@ type DbStore struct {
 	Db *sql.DB
 }
 
-func (store *DbStore) GetExercises() ([]*model.Comment, error) {
+func (store *DbStore) GetExercises() ([]*model.Exercise, error) {
 	// Query the database for all birds, and return the result to the
 	// `rows` object
-	rows, err := store.Db.Query("SELECT * from comment")
+	rows, err := store.Db.Query("SELECT * from exercise")
 	// We return incase of an error, and defer the closing of the row structure
+	print(rows.Next())
 	if err != nil {
 		return nil, err
 	}
@@ -34,20 +35,21 @@ func (store *DbStore) GetExercises() ([]*model.Comment, error) {
 
 	// Create the data structure that is returned from the function.
 	// By default, this will be an empty array of birds
-	comments := []*model.Comment{}
+	exercises := []*model.Exercise{}
 	for rows.Next() {
 		// For each row returned by the table, create a pointer to a bird,
-		comment := &model.Comment{}
+		exercise := &model.Exercise{}
 		// Populate the `Species` and `Description` attributes of the bird,
 		// and return incase of an error
-		if err := rows.Scan(&comment.Id, &comment.FullName, &comment.Content); err != nil {
+		print(rows)
+		if err := rows.Scan(&exercise.Id, &exercise.Name, &exercise.Equipment); err != nil {
 			return nil, err
 		}
 		// Finally, append the result to the returned array, and repeat for
 		// the next row
-		comments = append(comments, comment)
+		exercises = append(exercises, exercise)
 	}
-	return comments, nil
+	return exercises, nil
 }
 
 // The store variable is a package level variable that will be available for
