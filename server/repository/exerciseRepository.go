@@ -4,11 +4,14 @@ package repository
 // The sql go library is needed to interact with the database
 import (
 	"database/sql"
-	"ntp-server/model"
+	model "github.com/Vukeezy/main/model"
 )
 
+
 type Store interface {
-	getExercises() ([]*model.Comment, error)
+
+	GetExercises() ([]*model.Comment, error)
+
 	//GetBirds() ([]*Bird, error)
 }
 
@@ -19,7 +22,7 @@ type DbStore struct {
 	Db *sql.DB
 }
 
-func (store *DbStore) getExercises() ([]*model.Comment, error) {
+func (store *DbStore) GetExercises() ([]*model.Comment, error) {
 	// Query the database for all birds, and return the result to the
 	// `rows` object
 	rows, err := store.Db.Query("SELECT * from comment")
@@ -57,6 +60,10 @@ typically be done at the beginning of our application (in this case, when the se
 This can also be used to set up the store as a mock, which we will be observing
 later on
 */
+func GetStore() Store{
+	return store
+}
+
 func InitStore(s Store) {
 	store = s
 }
