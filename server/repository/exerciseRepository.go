@@ -5,6 +5,7 @@ package repository
 import (
 	"database/sql"
 	model "github.com/Vukeezy/main/model"
+	"strconv"
 )
 
 
@@ -23,32 +24,124 @@ type DbStore struct {
 }
 
 func (store *DbStore) GetExercises() ([]*model.Exercise, error) {
-	// Query the database for all birds, and return the result to the
-	// `rows` object
+
 	query := `SELECT * FROM "exercise"`
 	rows, err := store.Db.Query(query)
-	// We return incase of an error, and defer the closing of the row structure
+
 	if err != nil {
 		return nil, err
 	}
+
 	defer rows.Close()
 
-	// Create the data structure that is returned from the function.
-	// By default, this will be an empty array of birds
 	exercises := []*model.Exercise{}
+
 	for rows.Next() {
-		// For each row returned by the table, create a pointer to a bird,
+
 		exercise := &model.Exercise{}
-		// Populate the `Species` and `Description` attributes of the bird,
-		// and return incase of an error
+		model.GetExerciseDTO(exercise)
+
 		if err := rows.Scan(&exercise.Id, &exercise.RequestedPreparedness, &exercise.Equipment, &exercise.Name, &exercise.Description, &exercise.Type); err != nil {
 			return nil, err
 		}
-		// Finally, append the result to the returned array, and repeat for
-		// the next row
+
+		muscles_query := `SELECT * FROM "exercise_muscle" WHERE "exercise_id" = ` + strconv.Itoa(exercise.Id)
+		muscles_rows, muscles_err := store.Db.Query(muscles_query)
+
+		exercise.Muscles, err = getMusclesByExerciseId(store, exercise.Id)
+		exercise.Comments, err = getCommentsByExerciseId(store, exercise.Id)
+
+		if muscles_err != nil {
+			muscles_rows.Close()
+			return nil, err
+		}
+
+		defer muscles_rows.Close()
+
 		exercises = append(exercises, exercise)
 	}
 	return exercises, nil
+}
+
+func getMusclesByExerciseId(store *DbStore,exerciseId int) ([]int, error) {
+	muscles_query := `SELECT * FROM "exercise_muscle" WHERE "exercise_id" = ` + strconv.Itoa(exerciseId)
+	muscles_rows, _ := store.Db.Query(muscles_query)
+
+	var muscles []int
+
+	for muscles_rows.Next() {
+		var muscle int
+		var dummy int
+
+		if err := muscles_rows.Scan(&dummy, &muscle); err != nil {
+			return nil, err
+		}
+
+		muscles = append(muscles, muscle)
+	}
+
+	return muscles, nil
+}
+
+func getCommentsByExerciseId(store *DbStore,exerciseId int) ([]model.Comment, error) {
+	comment_query := `SELECT * FROM "exercise_comment" WHERE "exercise_id" = ` + strconv.Itoa(exerciseId)
+	comment_rows, _ := store.Db.Query(comment_query)
+
+	var comments []model.Comment
+
+	for comment_rows.Next() {
+		var comment_id, dummy int
+
+		if err := comment_rows.Scan(&dummy, &comment_id); err != nil {
+			return nil, err
+		}
+
+		var comment model.Comment
+
+		comment,_ = getCommentById(*store, comment_id)
+
+		comments = append(comments, comment)
+	}
+
+	return comments, nil
+}
+
+func getCommentById(store DbStore, commentId int) (model.Comment, error) {
+	comment_query := `SELECT * FROM "comment" WHERE "id" = ` + strconv.Itoa(commentId)
+	comment_rows, _ := store.Db.Query(comment_query)
+
+
+	for comment_rows.Next() {
+		var comment model.Comment
+
+		if err := comment_rows.Scan(&comment.Id, &comment.FullName, &comment.Content); err != nil {
+			return model.Comment{}, err
+		}
+
+		comment.Rates, _ = getRatesByCommentId(store,comment.Id)
+
+		return comment, nil
+	}
+	return model.Comment{}, nil
+}
+
+func getRatesByCommentId(store DbStore, commentId int) ([]int, error) {
+	rate_query := `SELECT * FROM "rate_comment" WHERE "comment_id" = ` + strconv.Itoa(commentId)
+	rate_rows, _ := store.Db.Query(rate_query)
+
+	var rates []int
+
+	for rate_rows.Next() {
+		var rate,dummy int
+
+		if err := rate_rows.Scan(&dummy, &rate); err != nil {
+			return nil, err
+		}
+
+		rates = append(rates, rate)
+
+	}
+	return rates, nil
 }
 
 // The store variable is a package level variable that will be available for
