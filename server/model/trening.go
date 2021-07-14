@@ -9,11 +9,13 @@ type Exercise struct {
 	Description           string `json:"description"`
 	Type                  int `json:"type"`
 	Comments              []Comment
+	Rates				  []int
 }
 
 func GetExerciseDTO (exercise *Exercise) ExerciseDTO {
 	var exerciseDTO = ExerciseDTO{Name: exercise.Name, Equipment: exercise.Equipment, Description: exercise.Description,
-								Type: IntToExerciseType(exercise.Type), RequestedPreparedness: IntToPreparednessLevel(exercise.RequestedPreparedness), Comments: exercise.Comments }
+								Type: IntToExerciseType(exercise.Type), RequestedPreparedness: IntToPreparednessLevel(exercise.RequestedPreparedness),
+								Comments: exercise.Comments, Rates: exercise.Rates}
 	for i := 0; i < len(exercise.Muscles); i++ {
 		exerciseDTO.Muscles = append(exerciseDTO.Muscles, IntToMuscle(exercise.Muscles[i]))
 	}
@@ -28,4 +30,5 @@ type ExerciseDTO struct {
 	Description           string `json:"description"`
 	Type                  string `json:"type"`
 	Comments              []Comment
+	Rates				  []int
 }

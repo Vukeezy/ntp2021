@@ -12,6 +12,8 @@ import (
 type Store interface {
 
 	GetExercises() ([]*model.Exercise, error)
+	RateExercise(rate int, exerciseId int)  error
+	RateComment(rate int, commentId int)  error
 
 	//GetBirds() ([]*Bird, error)
 }
@@ -21,6 +23,16 @@ type Store interface {
 // the database connection.
 type DbStore struct {
 	Db *sql.DB
+}
+
+func (store *DbStore) RateExercise(exerciseId int, rate int) error {
+	_, err := store.Db.Query("INSERT INTO rate_exercise VALUES ($1,$2)", exerciseId, rate)
+	return err
+}
+
+func (store *DbStore) RateComment(commentId int, rate int) error {
+	_, err := store.Db.Query("INSERT INTO rate_comment VALUES ($1,$2)", commentId, rate)
+	return err
 }
 
 func (store *DbStore) GetExercises() ([]*model.Exercise, error) {
@@ -50,6 +62,7 @@ func (store *DbStore) GetExercises() ([]*model.Exercise, error) {
 
 		exercise.Muscles, err = getMusclesByExerciseId(store, exercise.Id)
 		exercise.Comments, err = getCommentsByExerciseId(store, exercise.Id)
+		exercise.Rates, err = getRatesByExerciseId(store, exercise.Id)
 
 		if muscles_err != nil {
 			muscles_rows.Close()
@@ -98,7 +111,7 @@ func getCommentsByExerciseId(store *DbStore,exerciseId int) ([]model.Comment, er
 
 		var comment model.Comment
 
-		comment,_ = getCommentById(*store, comment_id)
+		comment,_ = getCommentById(store, comment_id)
 
 		comments = append(comments, comment)
 	}
@@ -106,7 +119,7 @@ func getCommentsByExerciseId(store *DbStore,exerciseId int) ([]model.Comment, er
 	return comments, nil
 }
 
-func getCommentById(store DbStore, commentId int) (model.Comment, error) {
+func getCommentById(store *DbStore, commentId int) (model.Comment, error) {
 	comment_query := `SELECT * FROM "comment" WHERE "id" = ` + strconv.Itoa(commentId)
 	comment_rows, _ := store.Db.Query(comment_query)
 
@@ -125,8 +138,27 @@ func getCommentById(store DbStore, commentId int) (model.Comment, error) {
 	return model.Comment{}, nil
 }
 
-func getRatesByCommentId(store DbStore, commentId int) ([]int, error) {
+func getRatesByCommentId(store *DbStore, commentId int) ([]int, error) {
 	rate_query := `SELECT * FROM "rate_comment" WHERE "comment_id" = ` + strconv.Itoa(commentId)
+	rate_rows, _ := store.Db.Query(rate_query)
+
+	var rates []int
+
+	for rate_rows.Next() {
+		var rate,dummy int
+
+		if err := rate_rows.Scan(&dummy, &rate); err != nil {
+			return nil, err
+		}
+
+		rates = append(rates, rate)
+
+	}
+	return rates, nil
+}
+
+func getRatesByExerciseId(store *DbStore, exerciseId int) ([]int, error) {
+	rate_query := `SELECT * FROM "rate_exercise" WHERE "exercise_id" = ` + strconv.Itoa(exerciseId)
 	rate_rows, _ := store.Db.Query(rate_query)
 
 	var rates []int
