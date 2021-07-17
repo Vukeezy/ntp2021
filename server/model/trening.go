@@ -10,12 +10,22 @@ type Exercise struct {
 	Type                  int `json:"type"`
 	Comments              []Comment
 	Rates				  []int
+	Age					  int
 }
 
 func GetExerciseDTO (exercise *Exercise) ExerciseDTO {
-	var exerciseDTO = ExerciseDTO{Name: exercise.Name, Equipment: exercise.Equipment, Description: exercise.Description,
+	rate_sum := 0
+	var rate_avg float64 = 0.0
+	if len(exercise.Rates) > 0 {
+		for i := 0; i < len(exercise.Rates); i++{
+			rate_sum += exercise.Rates[i]
+		}
+		rate_avg = float64(rate_sum) / float64(len(exercise.Rates))
+	}
+
+	var exerciseDTO = ExerciseDTO{Id: exercise.Id, Name: exercise.Name, Equipment: exercise.Equipment, Description: exercise.Description,
 								Type: IntToExerciseType(exercise.Type), RequestedPreparedness: IntToPreparednessLevel(exercise.RequestedPreparedness),
-								Comments: exercise.Comments, Rates: exercise.Rates}
+								Comments: exercise.Comments, Rate: rate_avg, Age: IntToAgeRecommendation(exercise.Age)}
 	for i := 0; i < len(exercise.Muscles); i++ {
 		exerciseDTO.Muscles = append(exerciseDTO.Muscles, IntToMuscle(exercise.Muscles[i]))
 	}
@@ -23,6 +33,7 @@ func GetExerciseDTO (exercise *Exercise) ExerciseDTO {
 }
 
 type ExerciseDTO struct {
+	Id					  int `json:"id"`
 	RequestedPreparedness string `json:"requestedpreparedness"`
 	Equipment             bool `json:"equipment"`
 	Muscles               []string
@@ -30,5 +41,6 @@ type ExerciseDTO struct {
 	Description           string `json:"description"`
 	Type                  string `json:"type"`
 	Comments              []Comment
-	Rates				  []int
+	Rate				  float64 `json:"rate"`
+	Age					  string `json:"ageRecommendation"`
 }

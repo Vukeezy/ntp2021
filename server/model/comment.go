@@ -5,6 +5,7 @@ type Comment struct {
 	FullName string `json:"fullName"`
 	Content  string `json:"content"`
 	Rates    []int
+	Rate	 float64 `json:"rate"`
 }
 
 //custom getter for rates
